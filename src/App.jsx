@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import Loading from "./components/Loading";
+import Travels from "./components/Travels";
+import Modal from "./components/Modal";
 
 
 // const url = 'https://course-api.com/react-tours-project'
@@ -11,7 +13,8 @@ const url = 'https://jsonplaceholder.typicode.com/posts'
 const App = () => {
 
   const [loading, setLoading] = useState(false);
-  const [travels, setTravels] = useState([]); 
+  const [travels, setTravels] = useState([]);
+  const [modal, setModal] = useState(false);
 
 
   const removeItem = (id) => {
@@ -47,14 +50,10 @@ const App = () => {
   return (
     <div>
       <h1>hello world</h1>
-      {travels.map((travel) => {
-        return (
-          <div key={travel.id}>
-            {travel.title}
-            <button onClick={removeItem(travel.id)}>remove</button>
-         </div>
-       )
-     })}
+      <button onClick={() => setModal(!modal)}>
+        {modal ? 'close' : 'open'}
+      </button>
+      {modal ? <Modal modal={modal} setModal={setModal} /> : <Travels travels={travels} removeItem={removeItem} />}
     </div>
   )
 }
